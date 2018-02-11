@@ -1,1 +1,67 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-02-11T10:42:33+05:30</updated><id>http://localhost:4000/</id><title type="html">Piyush Divyankar’s Blog</title><subtitle>A place for learning. </subtitle></feed>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.0">Jekyll</generator><link href="https://piyushdivyankar1994.github.io//feed.xml" rel="self" type="application/atom+xml" /><link href="https://piyushdivyankar1994.github.io//" rel="alternate" type="text/html" /><updated>2018-02-11T10:45:03+05:30</updated><id>https://piyushdivyankar1994.github.io//</id><title type="html">Piyush Divyankar’s Blog</title><subtitle>A place for learning.</subtitle><entry><title type="html">Introduction to Time Series.</title><link href="https://piyushdivyankar1994.github.io//2018/02/11/Introduction-to-time-series.html" rel="alternate" type="text/html" title="Introduction to Time Series." /><published>2018-02-11T09:00:00+05:30</published><updated>2018-02-11T09:00:00+05:30</updated><id>https://piyushdivyankar1994.github.io//2018/02/11/Introduction-to-time-series</id><content type="html" xml:base="https://piyushdivyankar1994.github.io//2018/02/11/Introduction-to-time-series.html">&lt;h1 id=&quot;introduction-to-time-series&quot;&gt;Introduction to Time Series&lt;/h1&gt;
+
+&lt;p&gt;First things first let’s define what is a time series.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Time Series&lt;/strong&gt; is a list of data points that are indexed by time.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This is a simple definition that will serve our purposes for some time. Let’s see some examples of time series data. Since I want this blog to be centered around finance let’s take stock prices as an example.&lt;/p&gt;
+
+&lt;h2 id=&quot;getting-stock-data&quot;&gt;Getting stock data&lt;/h2&gt;
+
+&lt;p&gt;To get stock data we use &lt;a href=&quot;https://pandas-datareader.readthedocs.io/en/latest/&quot;&gt;pandas-datareader&lt;/a&gt;. We will fetch the close price of NIFTY-50 for the past year. We are querying data from quandl.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas_datareader.data&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;web&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;datetime&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Specify start and end date.&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2017&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2018&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;nifty&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;web&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataReader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'NSE/NIFTY_50'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'quandl'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# First 5 rows for NIFTY_50 data&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nifty&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;                Open      High       Low     Close  SharesTraded  TurnoverRsCr
+Date
+2018-01-01  10531.70  10537.85  10423.10  10435.55   134532090.0       7546.56
+2017-12-29  10492.35  10538.70  10488.65  10530.70   156736221.0       8943.10
+2017-12-26  10512.30  10545.45  10477.95  10531.50   160417384.0       9043.77
+2017-12-22  10457.30  10501.10  10448.25  10493.00   143119167.0       8755.32
+2017-12-21  10473.95  10473.95  10426.90  10440.30   156646972.0       9411.20
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;As you are able to see we have the data for the first 5 entries of the NIFTY_50 index. See that index of the data is dates.&lt;/p&gt;
+
+&lt;h2 id=&quot;visualiztion&quot;&gt;Visualiztion&lt;/h2&gt;
+&lt;p&gt;The first thing we want to do with a time series is plot it. We want to have a line plot where x-axis is time and the y-axis is the variable. Let’s plot close prices of the index.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nifty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Close'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;figsize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ylabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'NIFTY-50'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/Introduction_5_0.png&quot; alt=&quot;nifty50plot&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Visualization is the first step in the time series analysis. It tells us many things about the data.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;What does the above plot tell us about close prices of Nifty-50?&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;There is a general upward trend to the close price.&lt;/li&gt;
+  &lt;li&gt;There is some fluctuation but it isn’t that noisy.&lt;/li&gt;
+  &lt;li&gt;There seems to be some gradual increase and a quicker fall happening periodicallys.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;These are observations in layman’s terms in future we will see how to improve upon these by using some specific terminology.&lt;/p&gt;</content><author><name></name></author><summary type="html">Introduction to Time Series</summary></entry><entry><title type="html">About the blog</title><link href="https://piyushdivyankar1994.github.io//2018/02/11/AbouttheBlog.html" rel="alternate" type="text/html" title="About the blog" /><published>2018-02-11T09:00:00+05:30</published><updated>2018-02-11T09:00:00+05:30</updated><id>https://piyushdivyankar1994.github.io//2018/02/11/AbouttheBlog</id><content type="html" xml:base="https://piyushdivyankar1994.github.io//2018/02/11/AbouttheBlog.html">&lt;h1 id=&quot;hello-everyone&quot;&gt;Hello everyone&lt;/h1&gt;
+
+&lt;p&gt;I am Piyush Divyankar and welcome to my blog. Here I will post stuff related to
+Mathematics, Statistics and Programming. I will center my discussion around finance.&lt;/p&gt;
+
+&lt;p&gt;I hope everyone has a good time reading this and learning this.&lt;/p&gt;</content><author><name></name></author><summary type="html">Hello everyone</summary></entry></feed>
