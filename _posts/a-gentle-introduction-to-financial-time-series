@@ -1,0 +1,5 @@
+# A Gentle Introduction to financial time series
+
+A financial time series is a price of an asset at different times. For example the price of a stock at end of each day over a year. Analysis of financial time series falls under technical analysis. Here the assumption is that all the information about the asset is reflected in the price of the asset. We use statistical analysis on this time series data to make predictions about the future movement of the asset price. 
+
+The financial markets are a rocky sea, with ups and downs. Any analysis has to account for these ups and downs, which is technically called volatility. This variablity of the asset prices creates what is commonly known as risk. Here I will start to give a decent introduction about various techniques used to analyze financial times series. 
